@@ -3,11 +3,10 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: node:12 # You can use a different Node.js version as needed
-
-    working_directory: ~/app
+      - image: cimg/base:stable
 
     steps:
+      - setup_remote_docker
       - checkout
 
       # Install dependencies
@@ -19,12 +18,14 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t test . 
+            docker build -t test .
+
+      # Run Docker container
       - run:
           name: Docker run
           command: |
             docker run -d --network host test:latest
-          
+
 workflows:
   version: 2
   build:
