@@ -1,34 +1,27 @@
 version: 2.1
-orbs:
-  node: circleci/node@5.0.2
 
 jobs:
-  build_and_serve:
+  build:
     docker:
-      - image: cimg/base:2020.01
+      - image: node:12 # You can use a different Node.js version as needed
+
+    working_directory: ~/app
+
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
-      - restore_cache:
-          keys:
-            - node-v1-{{ checksum "package-lock.json" }}
-            # Add other cache keys as needed
+
+      # Install dependencies
       - run:
           name: Install Dependencies
           command: npm install
+
+      # Run tests
       - run:
-          command: npm run build
-          name: Build app
-      - run:
-          name: Serve build with Nginx
-          command: |
-            sudo apt-get update && sudo apt-get install -y nginx
-            sudo cp -r ~/project/dist/* /var/www/html/
-            sudo service nginx start
+          name: Run Tests
+          command: npm test
 
 workflows:
   version: 2
-  test_my_app:
+  build:
     jobs:
-      - build_and_serve
+      - build
