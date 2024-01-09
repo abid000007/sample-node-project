@@ -15,16 +15,7 @@ jobs:
           name: Install Dependencies
           command: npm install
           
-      # Build
-      - run:
-          name: Build
-          command: npm run build
-
-      # Copy build artifacts to ~/ directory
-      - run:
-          name: Copy Build Artifacts
-          command: cp -r ./build ~/ 
-
+     
 workflows:
   version: 2
   build:
