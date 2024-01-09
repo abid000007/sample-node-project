@@ -10,9 +10,18 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: npm
+      - restore_cache:
+          keys:
+            - node-v1-{{ checksum "package-lock.json" }}
+            # Add other cache keys as needed
       - run:
-          command: npm i
-          name: installing Deps
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: node-v1-{{ checksum "package-lock.json" }}
+            # Add other cache keys as needed
       - run:
           command: npm run build
           name: Build app
@@ -24,6 +33,7 @@ jobs:
             sudo service nginx start
 
 workflows:
+  version: 2
   test_my_app:
     jobs:
       - build_and_serve
