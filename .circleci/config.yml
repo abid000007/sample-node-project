@@ -6,11 +6,12 @@ jobs:
       - image: cimg/base:stable
 
     steps:
-      - setup_remote_docker
       - checkout
 
       # Install dependencies
-   
+      - run:
+          name: Install Dependencies
+          command: echo "Install your dependencies here, if needed"
 
       # Build Docker image
       - run:
