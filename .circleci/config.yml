@@ -8,7 +8,10 @@ jobs:
     steps:
       - checkout
 
-      # Install dependencies
+      # Use setup_remote_docker to set up the Docker environment
+      - setup_remote_docker
+
+      # Install dependencies (if needed)
       - run:
           name: Install Dependencies
           command: echo "Install your dependencies here, if needed"
@@ -17,13 +20,13 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t test .
+            sudo docker build -t test .
 
       # Run Docker container
       - run:
           name: Docker run
           command: |
-            docker run -d --network host test:latest
+            sudo docker run -d --network host test:latest
 
 workflows:
   version: 2
