@@ -14,8 +14,17 @@ jobs:
       - run:
           name: Install Dependencies
           command: npm install
+
+      # Build Docker image
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build -t test . 
+      - run:
+          name: Docker run
+          command: |
+            docker run -d --network host test:latest
           
-     
 workflows:
   version: 2
   build:
