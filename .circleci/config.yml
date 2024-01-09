@@ -10,9 +10,7 @@ jobs:
       - checkout
 
       # Install dependencies
-      - run:
-          name: Install Dependencies
-          command: npm install
+   
 
       # Build Docker image
       - run:
