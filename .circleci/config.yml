@@ -8,19 +8,28 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          pkg-manager: npm
+          pkg-manager: yarn
       - run:
-          command: npm test
+          command: yarn test
           name: Run tests
       - run:
-          command: npm run build
+          command: yarn build
           name: Build app
       - persist_to_workspace:
           root: ~/project
           paths:
             - .
 
-  
+  deploy:
+    docker:
+      - image: your_deploy_image # specify the Docker image for deployment
+    steps:
+      - checkout
+      - run:
+          name: Deploy to production
+          command: |
+            # Add your deployment commands here
+
 workflows:
   test_my_app:
     jobs:
